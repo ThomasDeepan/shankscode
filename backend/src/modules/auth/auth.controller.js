@@ -60,14 +60,14 @@ exports.login = async (req, res) => {
     const token = jwt.sign(
       { id: user._id, role: user.role },
       process.env.JWT_SECRET,
-      { expiresIn: "1d" }, // Expires in 1 day
+      { expiresIn: "2d" }, // Expires in 2 days
     );
 
     // Send token to frontend inside a secure, HTTP-only cookie
     res.cookie("token", token, {
       httpOnly: true, // Prevents frontend JavaScript from accessing the cookie (Protects from XSS attacks)
-      secure: false, // Set to true in production when using HTTPS
-      maxAge: 24 * 60 * 60 * 1000, // 1 day in milliseconds
+      secure: true, // Set to true in production when using HTTPS
+      maxAge: 48 * 60 * 60 * 1000, // 2 days in milliseconds
     });
 
     res.status(200).json({
