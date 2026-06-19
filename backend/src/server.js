@@ -2,6 +2,7 @@ require("dotenv").config(); // Load environment variables right at startup
 const express = require("express");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
+const path = require("path");
 const connectDB = require("./config/db");
 const globalRouter = require("./routes");
 
@@ -16,6 +17,10 @@ app.use(express.json()); // Parses incoming JSON body requests (Crucial for CRUD
 app.use(cookieParser()); // Parses cookies for security authentication later
 
 // 3. Mount all API Routes
+app.use(
+  "/certificates",
+  express.static(path.join(__dirname, "../public/certificates")),
+);
 app.use("/api/v1", globalRouter);
 
 // 4. Start Server
